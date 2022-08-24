@@ -13,7 +13,7 @@ connection.connect(function (error) {
         var userTableQuery = "CREATE TABLE IF NOT EXISTS user (id VARCHAR(255) PRIMARY KEY , name VARCHAR (255),username VARCHAR (255))"
         connection.query(userTableQuery, function (error,result) {
             if (error) throw error;
-            console.log(result);
+            //console.log(result);
             if (result.warningCount === 0){
              console.log("User table Created");
             }
@@ -22,7 +22,11 @@ connection.connect(function (error) {
 })
 
 router.get('/',(req,res) =>{
-    res.send('user get')
+    var query = "SELECT * FROM user"
+    connection.query(query, (error,rows) =>{
+        if (error) throw error
+            res.send(rows)
+    })
 })
 
 router.post('/', (req,res) =>{
@@ -42,7 +46,19 @@ router.post('/', (req,res) =>{
 })
 
 router.put('/', (req,res) =>{
-    res.send('user put')
+    const id = req.body.id;
+    const name = req.body.name;
+    const username = req.body.username;
+
+    var query = "UPDATE user SET name=?, username=? WHERE id=?"
+    connection.query(query, [name,username,id],(error,rows) =>{
+        if (error) throw error
+        if (rows.affectedRows > 0){
+            res.send({'message':'User Updated'})
+        }else {
+            res.send({'message':'User not found'})
+        }
+    });
 })
 
 router.delete('/:id', (req,res) =>{

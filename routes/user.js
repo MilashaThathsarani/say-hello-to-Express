@@ -13,7 +13,10 @@ connection.connect(function (error) {
         var userTableQuery = "CREATE TABLE IF NOT EXISTS user (id VARCHAR(255) PRIMARY KEY , name VARCHAR (255),username VARCHAR (255))"
         connection.query(userTableQuery, function (error,result) {
             if (error) throw error;
-            console.log("User table Created")
+            console.log(result);
+            if (result.warningCount === 0){
+             console.log("User table Created");
+            }
         })
      }
 })
@@ -24,8 +27,20 @@ router.get('/',(req,res) =>{
 
 router.post('/', (req,res) =>{
     console.log(req.body)
-    res.send('user post')
+    const id = req.body.id;
+    const name = req.body.name;
+    const username = req.body.username;
+
+    var query = "INSERT INTO user (id, name, username) VALUES (?,?,?)"
+    connection.query(query, [id,name,username],(error) =>{
+        if (error){
+            res.send({'message' :'Duplicate Entry'})
+        }else {
+            res.send({'message' : 'User created'})
+        }
+    });
 })
+
 router.put('/', (req,res) =>{
     res.send('user put')
 })

@@ -1,17 +1,22 @@
 const express = require('express');
-const customer = require('./routes/customer.js')
+//const customer = require('./routes/customer.js')
 const item = require('./routes/item')
+const user = require('./routes/user')
+
 const app = express();
 const port = 4000;
 
 app.use(express.json());
-app.use('/customer',customer)
-app.use('/item',item)
+// app.use('/customer',customer)
+// app.use('/item',item)
+app.use('/user',user)
 
-app.get('/', (req, res) => {
-    console.log('Get Request has come')
-    res.send('Hello World!')
-})
+
+
+// app.get('/', (req, res) => {
+//     console.log('Get Request has come')
+//     res.send('Hello World!')
+// })
 
 // app.get('/customer', (req, res) => {
 //     // console.log('Get Request has come')

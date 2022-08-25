@@ -78,7 +78,15 @@ router.delete('/:id', (req,res) =>{
 })
 
 router.get('/:id', (req,res) =>{
-    res.send('get user by id')
+    const id = req.params.id
+
+    var query = "SELECT * FROM user WHERE id=?"
+
+    connection.query(query, [id], (error, rows) => {
+        if (error) console.log(error);
+
+        res.send(rows)
+    })
 })
 
 module.exports = router

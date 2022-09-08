@@ -1,15 +1,25 @@
 const express = require('express');
-const customer = require('./routes/customer.js')
-const item = require('./routes/item')
-const user = require('./routes/user')
+const mongoose = require('mongoose')
+//const customer = require('./routes/customer.js')
+//const item = require('./routes/item')
+//const user = require('./routes/user')
 
 const app = express();
 const port = 4000;
 
+const url = 'mongodb://localhost/express'
+
+mongoose.connect(url, {useNewUrlParser: true})
+const con = mongoose.connection
+
+con.on("open", () => {
+    console.log('MongoDB connected')
+})
+
 app.use(express.json());
-app.use('/customer',customer)
-app.use('/item',item)
-app.use('/user',user)
+//app.use('/customer',customer)
+//app.use('/item',item)
+//app.use('/user',user)
 
 
 

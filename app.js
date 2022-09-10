@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose =require('mongoose')
 
 /*const customer=require('./routes/customer')*/
-// const item=require('./routes/item')
+const item=require('./routes/item')
 // const user=require('./routes/user')
 const app = express()
 const port = 4000
@@ -17,7 +17,7 @@ con.on("open",()=>{
 })
 app.use(express.json());   //if we use json object inside our app.js
 
-// app.use('/item',item)
+app.use('/item',item)
 // app.use('/users',user)
 
 app.listen(port, () => {
